@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::where('user_id', auth()->id())->get();
+            $products = auth()->user()->products()->get();
             return $this->sendResponse([
                 'data' => $products,
                 'message' => 'Products retrieved successfully'
