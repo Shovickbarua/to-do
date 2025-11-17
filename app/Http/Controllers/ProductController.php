@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::all();
+            $products = Product::where('user_id', auth()->id())->get();
             return $this->sendResponse([
                 'data' => $products,
                 'message' => 'Products retrieved successfully'
@@ -44,7 +44,11 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::create($request->all());
+            $product = Product::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => auth()->id(),
+            ]);
             return $this->sendResponse([
                 'data' => $product,
                 'message' => 'Product created successfully'
@@ -74,14 +78,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        try {
-            return $this->sendResponse([
-                'data' => $product,
-                'message' => 'Product retrieved successfully'
-            ]);
-        } catch (\Exception $e) {
-            return $this->sendError(['message' => $e->getMessage()], 500);
-        }   
+       // 
     }
 
     /**

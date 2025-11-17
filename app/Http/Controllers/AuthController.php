@@ -30,6 +30,23 @@ class AuthController extends Controller
         return $this->sendResponse(['token' => $token, 'message' => 'Logged In successfully']);
     }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return $this->sendResponse(['message' => 'Registered successfully'], 201);
+    }
+
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

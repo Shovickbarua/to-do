@@ -11,6 +11,7 @@ window.axios = axios;
 
 const token = localStorage.getItem('token');
 
+window.axios.defaults.withCredentials = true;
 if (token) {
     window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
