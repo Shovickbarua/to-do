@@ -1,9 +1,9 @@
 import axios from "../lib/axios";
 
-const ProductApi = () => {};
+const TodoApi = () => {};
 
-ProductApi.index = async () => {
-    let url = '/api/products';
+TodoApi.index = async () => {
+    let url = '/api/todos';
     try {
         const response = await axios.get(url);
         return response.data;
@@ -12,9 +12,9 @@ ProductApi.index = async () => {
     }
 }
 
-ProductApi.save = async (data) => {
-    let url = '/api/products';
-    if (data.id) url = "/api/products/" + data.id + "?_method=PUT";
+TodoApi.save = async (data) => {
+    let url = '/api/todos';
+    if (data.id) url = "/api/todos/" + data.id + "?_method=PUT";
     try {
         const response = await axios.post(url, data);
         return response.data;
@@ -23,8 +23,8 @@ ProductApi.save = async (data) => {
     }
 }
 
-ProductApi.show = async (id) => {
-    let url = "/api/products/" + id;
+TodoApi.show = async (id) => {
+    let url = "/api/todos/" + id;
     try {
         const response = await axios.get(url);
         return response.data;
@@ -33,8 +33,8 @@ ProductApi.show = async (id) => {
     }
 }
 
-ProductApi.delete = async (id) => {
-    let url = "/api/products/" + id;
+TodoApi.delete = async (id) => {
+    let url = "/api/todos/" + id;
     try {
         const response = await axios.delete(url);
         return response.data;
@@ -43,4 +43,4 @@ ProductApi.delete = async (id) => {
     }
 }
 
-export default ProductApi;
+export default TodoApi;

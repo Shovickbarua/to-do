@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
-import ProductApi from '../../api/ProductApi';
+import TodoApi from '../../api/TodoApi';
 import { useRoute, useRouter } from 'vue-router';
 
 const form = ref({
@@ -13,26 +13,26 @@ const route = useRoute();
 const id = route.params.id;
 
 const handleSubmit = async () => {
-    const res = await ProductApi.save(form.value);
+    const res = await TodoApi.save(form.value);
     if(res.success) {
-        router.push('/products');
+        router.push('/todos');
     } else {
         alert(res.errors.message);
     }
 }
 
-const getProduct = async (id) => {
-    const res = await ProductApi.show(id);
+const getTodo = async (id) => {
+    const res = await TodoApi.show(id);
     if(res.success) {
         form.value = res.data.data;
     } else {
-        alert(res.errors.message);
+        alert(res.errors.message);  
     }
 }
 
 onMounted(() => {
     if(id) {
-        getProduct(id);
+        getTodo(id);
     }
 })
 
@@ -45,9 +45,9 @@ onMounted(() => {
     <div class="max-w-md w-full mx-auto p-6 bg-white rounded-lg shadow-md">
       <div class="flex justify-between items-center">
         <h2 class="text-2xl font-semibold mb-4">
-          {{ id ? 'Update' : 'Create' }} Product
+          {{ id ? 'Update' : 'Create' }} Todo
         </h2>
-        <router-link to="/products" class="inline-block mb-4 text-blue-600 hover:underline">← Back to Products</router-link>
+        <router-link to="/todos" class="inline-block mb-4 text-blue-600 hover:underline">← Back to Todos</router-link>
       </div>
 
       <form @submit.prevent="handleSubmit" class="space-y-5">

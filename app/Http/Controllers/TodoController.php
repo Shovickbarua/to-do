@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Todo;
 use App\Traits\CommonTrait;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class TodoController extends Controller
 {
     use CommonTrait;
     /**
@@ -15,10 +15,10 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = auth()->user()->products()->get();
+            $todos = auth()->user()->todos()->get();
             return $this->sendResponse([
-                'data' => $products,
-                'message' => 'Products retrieved successfully'
+                'data' => $todos,
+                'message' => 'Todos retrieved successfully'
             ]);
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 500);
@@ -44,14 +44,14 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::create([
+            $todo = Todo::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'user_id' => auth()->id(),
             ]);
             return $this->sendResponse([
-                'data' => $product,
-                'message' => 'Product created successfully'
+                'data' => $todo,
+                'message' => 'Todo created successfully'
             ], 201);
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 500);
@@ -61,12 +61,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Todo $todo)
     {
         try {
             return $this->sendResponse([
-                'data' => $product,
-                'message' => 'Product retrieved successfully'
+                'data' => $todo,
+                'message' => 'Todo retrieved successfully'
             ]);
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 500);
@@ -76,7 +76,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Todo $todo)
     {
        // 
     }
@@ -84,7 +84,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Todo $todo)
     {
         $request->validate([
             'title' => 'required',
@@ -92,10 +92,10 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product->update($request->all());
+            $todo->update($request->all());
             return $this->sendResponse([
-                'data' => $product,
-                'message' => 'Product updated successfully'
+                'data' => $todo,
+                'message' => 'Todo updated successfully'
             ]);
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 500);
@@ -105,13 +105,13 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Todo $todo)
     {
         try {
-            $product->delete();
+            $todo->delete();
             return $this->sendResponse([
-                'data' => $product,
-                'message' => 'Product deleted successfully'
+                'data' => $todo,
+                'message' => 'Todo deleted successfully'
             ]);
         } catch (\Exception $e) {
             return $this->sendError(['message' => $e->getMessage()], 500);

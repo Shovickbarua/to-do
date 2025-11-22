@@ -1,25 +1,25 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import ProductApi from '../../api/ProductApi';
+import TodoApi from '../../api/TodoApi';
 import AuthApi from '../../api/AuthApi';
 import { useRouter } from 'vue-router';
 
-const products = ref([]);
+const todos = ref([]);
 const router = useRouter();
 
-const getProducts = async () => {
-    const res = await ProductApi.index();
+const getTodos = async () => {
+    const res = await TodoApi.index();
     if(res.success) {
-        products.value = res.data.data;
+        todos.value = res.data.data;
     } else {
         alert(res.errors.message);
     }
 }
 
-const deleteProduct = async (id) => {
-    const res = await ProductApi.delete(id);
+const deleteTodo = async (id) => {
+    const res = await TodoApi.delete(id);
     if(res.success) {
-        getProducts();
+        getTodos();
     } else {
         alert(res.errors.message);
     }
@@ -36,7 +36,7 @@ const logout = async () => {
 }
 
 onMounted(() => {
-  getProducts();
+  getTodos();
 });
 
 </script>
@@ -46,7 +46,7 @@ onMounted(() => {
     <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
       <div class="overflow-x-auto">
         <div class="flex justify-between items-center mt-4 mx-4">
-          <router-link to="/products/create" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Create New Product</router-link>
+          <router-link to="/todos/create" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Create New Todo</router-link>
           <button
             @click="logout"
             class="inline-block mb-4 px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
@@ -68,16 +68,16 @@ onMounted(() => {
           </thead>
 
           <tbody class="bg-white divide-y divide-gray-200 whitespace-nowrap">
-          <tr v-for="product in products" :key="product.id">
+          <tr v-for="todo in todos" :key="todo.id">
             <td class="px-4 py-4 text-sm text-slate-900 font-medium">
-            {{ product.title }}
+            {{ todo.title }}
             </td>
             <td class="px-4 py-4 text-sm text-slate-600 font-medium">
-            {{ product.description }}
+            {{ todo.description }}
             </td>
             <td class="px-4 py-4 text-sm">
-            <router-link :to="`/products/edit/${product.id}`" class="cursor-pointer text-blue-600 font-medium mr-4">Edit</router-link>
-            <button class="cursor-pointer text-red-600 font-medium" @click="deleteProduct(product.id)">Delete</button>
+            <router-link :to="`/todos/edit/${todo.id}`" class="cursor-pointer text-blue-600 font-medium mr-4">Edit</router-link>
+            <button class="cursor-pointer text-red-600 font-medium" @click="deleteTodo(todo.id)">Delete</button>
             </td>
           </tr>
           </tbody>

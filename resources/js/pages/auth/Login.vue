@@ -14,7 +14,7 @@ const handleSubmit = async () => {
     const res = await AuthApi.login(form.value);
     if(res.success) {
         localStorage.setItem('token', res.data.token);
-        router.push('/products');
+        router.push('/todos');
     } else {
         alert(res.errors.message);
     }

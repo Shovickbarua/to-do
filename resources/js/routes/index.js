@@ -1,16 +1,16 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import Login from '../pages/auth/Login.vue'
-import ProductList from '../pages/products/ProductList.vue'
-import ProductForm from '../pages/products/ProductForm.vue'
+import TodoList from '../pages/todos/TodoList.vue'
+import TodoForm from '../pages/todos/TodoForm.vue'
 import Registration from '../pages/auth/Registration.vue'
 
 
 const routes = [
   { path: '/', component: Login, meta: { guestOnly: true } },
   { path: '/register', component: Registration, meta: { guestOnly: true } },
-  { path: '/products', component: ProductList, meta: { requiresAuth: true } },
-  { path: '/products/create', component: ProductForm, meta: { requiresAuth: true } },
-  { path: '/products/edit/:id', component: ProductForm, meta: { requiresAuth: true } },
+  { path: '/todos', component: TodoList, meta: { requiresAuth: true } },
+  { path: '/todos/create', component: TodoForm, meta: { requiresAuth: true } },
+  { path: '/todos/edit/:id', component: TodoForm, meta: { requiresAuth: true } },
 ]
 
 export const router = createRouter({
@@ -23,6 +23,6 @@ router.beforeEach((to, from) => {
   if (to.meta?.requiresAuth && !authed) {
     return '/'
   } else if (to.meta?.guestOnly && authed) {
-    return '/products'
+    return '/todos'
   }
 })
