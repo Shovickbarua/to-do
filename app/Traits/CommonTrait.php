@@ -12,7 +12,7 @@ trait CommonTrait
         return response()->json($cresponse, $statusCode);
     }
 
-    public function sendError($error, $statusCode = 400)
+    public function sendError($error, $statusCode = 404)
     {
         $cresponse['status'] = 'error';
         $cresponse['success'] = false;
