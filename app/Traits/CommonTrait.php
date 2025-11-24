@@ -9,16 +9,14 @@ trait CommonTrait
         $cresponse['status'] = 'success';
         $cresponse['success'] = true;
         $cresponse['data'] = $response;
-        return response()->json($cresponse, $statusCode, array('Content-Type'=>'application/json', 'charset'=>'utf-8' ));
-
+        return response()->json($cresponse, $statusCode);
     }
 
-    public function sendError($error, $code = 404)
+    public function sendError($error, $statusCode = 400)
     {
-        $response['stausCode'] = $code;
-        $response['status'] = 'error';
-        $response['success'] = false;
-        $response['errors'] = $error;
-        return response()->json($response, $code);
+        $cresponse['status'] = 'error';
+        $cresponse['success'] = false;
+        $cresponse['error'] = $error;
+        return response()->json($cresponse, $statusCode);
     }
 }
